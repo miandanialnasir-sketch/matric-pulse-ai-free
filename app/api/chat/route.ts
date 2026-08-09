@@ -1,12 +1,13 @@
- import { convertToModelMessages, streamText, type UIMessage } from 'ai'
-import { createGroq } from '@ai-sdk/groq'
+import { convertToModelMessages, streamText, type UIMessage } from 'ai'
 import { SUBJECTS, gradeLabel, type Grade } from '@/lib/data'
+import { createOpenAI } from '@ai-sdk/openai'
 
-export const maxDuration = 30
-
-const groq = createGroq({
+const groq = createOpenAI({
+  baseURL: 'https://api.groq.com/openai/v1',
   apiKey: process.env.GROQ_API_KEY,
 })
+
+export const maxDuration = 30
 
 export async function POST(req: Request) {
   const {
