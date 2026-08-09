@@ -1,13 +1,11 @@
-import { convertToModelMessages, streamText, UIMessage } from 'ai'
+ import { convertToModelMessages, streamText, type UIMessage } from 'ai'
+import { createGroq } from '@ai-sdk/groq'
 import { SUBJECTS, gradeLabel, type Grade } from '@/lib/data'
-import { createOpenAI } from '@ai-sdk/openai'
 
 export const maxDuration = 30
 
-// Groq configuration through OpenAI provider
-const groq = createOpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-  baseURL: 'https://groq.com',
+const groq = createGroq({
+  apiKey: process.env.GROQ_API_KEY,
 })
 
 export async function POST(req: Request) {
@@ -38,13 +36,13 @@ Your job:
 - Guide the student through today's tasks and how to use app features when asked.
 - You may write math using LaTeX wrapped in double dollar signs.
 - Keep replies focused, encouraging, and age-appropriate. You can reply in English, Urdu, or Roman Urdu to match the student.
-- Do not mention regional boards unless the student asks.`
+Do not mention regional boards unless the student asks.`
 
   const result = streamText({
-    model: groq('llama-3.3-70b-versatile'), // Free and super-fast Groq model
-    system: instructions,
+    model: groq('llama-3.3-70b-versatile'),
+    instructions,
     messages: await convertToModelMessages(messages),
   })
 
-  return result.toDataStreamResponse()
+  return result.toUIMessageStreamResponse()
 }
