@@ -33,7 +33,6 @@ Your job:
 - Keep replies focused, encouraging, and age-appropriate. You can reply in English, Urdu, or Roman Urdu to match the student.
 Do not mention regional boards unless the student asks.`
 
-  // Yeh direct Groq ke URL aur key ko use karega bina kisi extra package ke
   const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: {
