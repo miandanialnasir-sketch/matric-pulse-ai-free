@@ -1,11 +1,5 @@
-import { convertToModelMessages, streamText, type UIMessage } from 'ai'
+import { streamText, type UIMessage } from 'ai'
 import { SUBJECTS, gradeLabel, type Grade } from '@/lib/data'
-import { createOpenAI } from '@ai-sdk/openai'
-
-const groq = createOpenAI({
-  baseURL: 'https://api.groq.com/openai/v1',
-  apiKey: process.env.GROQ_API_KEY,
-})
 
 export const maxDuration = 30
 
@@ -39,11 +33,32 @@ Your job:
 - Keep replies focused, encouraging, and age-appropriate. You can reply in English, Urdu, or Roman Urdu to match the student.
 Do not mention regional boards unless the student asks.`
 
-  const result = streamText({
-    model: groq('llama-3.3-70b-versatile'),
-    instructions,
-    messages: await convertToModelMessages(messages),
+  // Yeh direct Groq ke URL aur key ko use karega bina kisi extra package ke
+  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: 'llama-3.3-70b-versatile',
+      messages: [
+        { role: 'system', content: instructions },
+        ...messages.map((m: any) => ({
+          role: m.role,
+          content: typeof m.content === 'string' ? m.content : m.content?.[0]?.text || '',
+        })),
+      ],
+      stream: true,
+    }),
   })
 
-  return result.toUIMessageStreamResponse()
+  if (!response.ok) {
+    const errorText = await response.text()
+    return new Response(JSON.stringify({ error: errorText }), { status: 500 })
+  }
+
+  return new Response(response.body, {
+    headers: { 'Content-Type': 'text/event-stream' },
+  })
 }
