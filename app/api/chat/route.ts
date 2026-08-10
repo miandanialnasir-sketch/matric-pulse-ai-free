@@ -1,6 +1,5 @@
 import { streamText, type UIMessage } from 'ai'
-import { SUBJECTS, gradeLabel, type Grade } from '@/lib/data'
-
+import { SUBJECTS, gradeLabel, type Grade } from '../../../lib/data'
 export const maxDuration = 30
 
 export async function POST(req: Request) {
