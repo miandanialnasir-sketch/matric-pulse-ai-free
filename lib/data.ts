@@ -37,7 +37,7 @@ const urduGrammar10 = {
     'https://youtube.com/playlist?list=PLF_rOjfXl15J941hlHZ_mexPG7robVUOz&si=rPvDfYp0a2ve4xFe',
 }
 
-export const SUBJECTS: Record<Grade, Subject[]> = {
+export const Subject: Record<Grade, Subject[]> = {
   '9': [
     {
       key: 'english',
