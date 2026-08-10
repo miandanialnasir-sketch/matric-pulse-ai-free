@@ -224,7 +224,7 @@ const subjectsData: Record<Grade, Subject[]> = {
   ],
 }
 
-// Dono naam export kar diye taaki koi error na aaye
+// Dono tareeqay export kar diye taaki koi bhi file naraz na ho
 export const subjects = subjectsData
 export const SUBJECTS = subjectsData
 
