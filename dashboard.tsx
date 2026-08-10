@@ -69,8 +69,7 @@ export function Dashboard({
           <div className="glow mt-4 flex items-start gap-3 rounded-2xl border border-primary/30 bg-primary/10 p-4">
             <Moon className="mt-0.5 size-5 shrink-0 text-primary" />
             <p className="text-sm leading-relaxed text-foreground">
-              Abhi apni Matricpulse AI ko band karo aur so jao, hum kal continue
-              karenge.
+              Close your MatricPulse AI for now and go to sleep, we will continue tomorrow
             </p>
           </div>
         )}
