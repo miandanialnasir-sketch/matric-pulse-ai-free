@@ -37,7 +37,7 @@ const urduGrammar10 = {
     'https://youtube.com/playlist?list=PLF_rOjfXl15J941hlHZ_mexPG7robVUOz&si=rPvDfYp0a2ve4xFe',
 }
 
-export const subject: Record<Grade, Subject[]> = {
+const subjectsData: Record<Grade, Subject[]> = {
   '9': [
     {
       key: 'english',
@@ -224,11 +224,14 @@ export const subject: Record<Grade, Subject[]> = {
   ],
 }
 
+// Dono naam export kar diye taaki koi error na aaye
+export const subjects = subjectsData
+export const SUBJECTS = subjectsData
+
 export function gradeLabel(grade: Grade) {
   return grade === '9' ? 'Matric Part 1 (9th Grade)' : 'Matric Part 2 (10th Grade)'
 }
 
-// Convert a Google Drive "view" link to a direct download link
 export function toDownloadUrl(url: string) {
   const match = url.match(/\/file\/d\/([^/]+)\//)
   if (match) {
